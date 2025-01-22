@@ -15,8 +15,8 @@ import (
 	"text/template"
 	"time"
 
-	"git.ipao.vip/rogeecn/atomctl/pkg/swag"
 	"github.com/go-openapi/spec"
+	"github.com/rogeecn/swag"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"sigs.k8s.io/yaml"

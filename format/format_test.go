@@ -139,7 +139,7 @@ var testFiles = map[string][]byte{
 		import (
 			"net/http"
 
-			"git.ipao.vip/rogeecn/atomctl/pkg/swag/format/testdata/api"
+			"github.com/rogeecn/swag/format/testdata/api"
 		)
 
 		// @title Swagger Example API

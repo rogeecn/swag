@@ -1,9 +1,8 @@
-module github.com/rogeecn/fwag
+module github.com/rogeecn/swag
 
 go 1.23.2
 
 require (
-	git.ipao.vip/rogeecn/atomctl v0.0.0-20250122014655-1ad9c7456876
 	github.com/KyleBanks/depth v1.2.1
 	github.com/go-openapi/spec v0.21.0
 	github.com/stretchr/testify v1.10.0

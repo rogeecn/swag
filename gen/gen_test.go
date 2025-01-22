@@ -14,8 +14,8 @@ import (
 	"strings"
 	"testing"
 
-	"git.ipao.vip/rogeecn/atomctl/pkg/swag"
 	"github.com/go-openapi/spec"
+	"github.com/rogeecn/swag"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -225,7 +225,7 @@ func TestGen_BuildDescriptionWithQuotes(t *testing.T) {
 		}
 	}
 
-	cmd := exec.Command("go", "build", "-buildmode=plugin", "git.ipao.vip/rogeecn/atomctl/pkg/swag/testdata/quotes")
+	cmd := exec.Command("go", "build", "-buildmode=plugin", "github.com/rogeecn/swag/testdata/quotes")
 
 	cmd.Dir = config.SearchDir
 
@@ -286,7 +286,7 @@ func TestGen_BuildDocCustomDelims(t *testing.T) {
 		}
 	}
 
-	cmd := exec.Command("go", "build", "-buildmode=plugin", "git.ipao.vip/rogeecn/atomctl/pkg/swag/testdata/delims")
+	cmd := exec.Command("go", "build", "-buildmode=plugin", "github.com/rogeecn/swag/testdata/delims")
 
 	cmd.Dir = config.SearchDir
 

@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"git.ipao.vip/rogeecn/atomctl/pkg/swag"
+	"github.com/rogeecn/swag"
 )
 
 // Format implements `fmt` command for formatting swag comments in Go source

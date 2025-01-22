@@ -2199,9 +2199,9 @@ func TestParseTypeOverrides(t *testing.T) {
 
 	searchDir := "testdata/global_override"
 	p := New(SetOverrides(map[string]string{
-		"git.ipao.vip/rogeecn/atomctl/pkg/swag/testdata/global_override/types.Application":  "string",
-		"git.ipao.vip/rogeecn/atomctl/pkg/swag/testdata/global_override/types.Application2": "git.ipao.vip/rogeecn/atomctl/pkg/swag/testdata/global_override/othertypes.Application",
-		"git.ipao.vip/rogeecn/atomctl/pkg/swag/testdata/global_override/types.ShouldSkip":   "",
+		"github.com/rogeecn/swag/testdata/global_override/types.Application":  "string",
+		"github.com/rogeecn/swag/testdata/global_override/types.Application2": "github.com/rogeecn/swag/testdata/global_override/othertypes.Application",
+		"github.com/rogeecn/swag/testdata/global_override/types.ShouldSkip":   "",
 	}))
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
@@ -4305,21 +4305,21 @@ func TestParser_skipPackageByPrefix(t *testing.T) {
 
 	parser := New()
 
-	assert.False(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag"))
-	assert.False(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag/cmd"))
-	assert.False(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag/gen"))
+	assert.False(t, parser.skipPackageByPrefix("github.com/rogeecn/swag"))
+	assert.False(t, parser.skipPackageByPrefix("github.com/rogeecn/swag/cmd"))
+	assert.False(t, parser.skipPackageByPrefix("github.com/rogeecn/swag/gen"))
 
-	parser = New(SetPackagePrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag/cmd"))
+	parser = New(SetPackagePrefix("github.com/rogeecn/swag/cmd"))
 
-	assert.True(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag"))
-	assert.False(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag/cmd"))
-	assert.True(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag/gen"))
+	assert.True(t, parser.skipPackageByPrefix("github.com/rogeecn/swag"))
+	assert.False(t, parser.skipPackageByPrefix("github.com/rogeecn/swag/cmd"))
+	assert.True(t, parser.skipPackageByPrefix("github.com/rogeecn/swag/gen"))
 
-	parser = New(SetPackagePrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag/cmd,git.ipao.vip/rogeecn/atomctl/pkg/swag/gen"))
+	parser = New(SetPackagePrefix("github.com/rogeecn/swag/cmd,github.com/rogeecn/swag/gen"))
 
-	assert.True(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag"))
-	assert.False(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag/cmd"))
-	assert.False(t, parser.skipPackageByPrefix("git.ipao.vip/rogeecn/atomctl/pkg/swag/gen"))
+	assert.True(t, parser.skipPackageByPrefix("github.com/rogeecn/swag"))
+	assert.False(t, parser.skipPackageByPrefix("github.com/rogeecn/swag/cmd"))
+	assert.False(t, parser.skipPackageByPrefix("github.com/rogeecn/swag/gen"))
 }
 
 func TestParser_ParseRouterApiInFuncBody(t *testing.T) {
