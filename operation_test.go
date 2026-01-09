@@ -153,6 +153,24 @@ func TestParseRouterOnlySlash(t *testing.T) {
 	assert.Equal(t, "GET", operation.RouterProperties[0].HTTPMethod)
 }
 
+func TestParseRouterCommentWithWildcard(t *testing.T) {
+	t.Parallel()
+
+	comment := `/@Router /files/* [get]`
+	operation := NewOperation(nil)
+	err := operation.ParseComment(comment, nil)
+	assert.NoError(t, err)
+	assert.Len(t, operation.RouterProperties, 1)
+	assert.Equal(t, "/files/{any}", operation.RouterProperties[0].Path)
+	assert.Equal(t, "GET", operation.RouterProperties[0].HTTPMethod)
+	assert.Len(t, operation.Parameters, 1)
+	assert.Equal(t, "any", operation.Parameters[0].Name)
+	assert.Equal(t, "path", operation.Parameters[0].In)
+	assert.Equal(t, "string", operation.Parameters[0].Type)
+	assert.False(t, operation.Parameters[0].Required)
+	assert.Equal(t, "any path", operation.Parameters[0].Description)
+}
+
 func TestParseRouterCommentWithPlusSign(t *testing.T) {
 	t.Parallel()
 

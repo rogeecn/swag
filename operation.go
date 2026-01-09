@@ -714,8 +714,35 @@ var (
 	routerParamTypePattern = regexp.MustCompile(`:(\w+)(<.*?>)?`)
 )
 
+func normalizeWildcardRoute(commentLine string) (string, bool) {
+	fields := FieldsByAnySpace(commentLine, 2)
+	if len(fields) < 2 {
+		return commentLine, false
+	}
+
+	path := fields[0]
+	if !strings.HasSuffix(path, "/*") {
+		return commentLine, false
+	}
+
+	path = strings.TrimSuffix(path, "/*") + "/:any"
+	return path + " " + fields[1], true
+}
+
+func (operation *Operation) ensureAnyPathParam() {
+	for _, param := range operation.Operation.Parameters {
+		if param.In == "path" && param.Name == "any" {
+			return
+		}
+	}
+
+	param := createParameter("path", "any path", "any", PRIMITIVE, STRING, "", false, nil, "")
+	operation.Operation.Parameters = append(operation.Operation.Parameters, param)
+}
+
 // ParseRouterComment parses comment for given `router` comment string.
 func (operation *Operation) ParseRouterComment(commentLine string, deprecated bool) error {
+	commentLine, addedAnyParam := normalizeWildcardRoute(commentLine)
 	commentLine = routerParamTypePattern.ReplaceAllString(commentLine, "{$1}")
 
 	matches := routerPattern.FindStringSubmatch(commentLine)
@@ -731,6 +758,10 @@ func (operation *Operation) ParseRouterComment(commentLine string, deprecated bo
 
 	if _, ok := allMethod[signature.HTTPMethod]; !ok {
 		return fmt.Errorf("invalid method: %s", signature.HTTPMethod)
+	}
+
+	if addedAnyParam {
+		operation.ensureAnyPathParam()
 	}
 
 	operation.RouterProperties = append(operation.RouterProperties, signature)
